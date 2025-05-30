@@ -4,21 +4,11 @@ public class Player : MonoBehaviour
 {
 
     private Rigidbody2D rb;
+    private Animator anim;
     private float inputH;
 
     [SerializeField] private float velocidadMovimiento;
-    public float VelocidadMovimiento
-    {
-        get { return velocidadMovimiento; }
-        set { velocidadMovimiento = value; }
-    }
-    
     [SerializeField] private float fuerzaSalto;
-    public float FuerzaSalto
-    {
-        get { return fuerzaSalto; }
-        set { fuerzaSalto = value; }
-    }
 
 
 
@@ -26,32 +16,54 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-           
+        anim = GetComponent<Animator>();
+
     }
 
-    // Update is called once per frame
+
     void Update()
+    {
+        Movimiento();
+        Saltar();
+        Atacar();
+    }
+
+
+    private void Movimiento()
     {
         inputH = Input.GetAxis("Horizontal");
 
-        // Move the player
         rb.linearVelocity = new Vector2(inputH * velocidadMovimiento, rb.linearVelocity.y);
+        if (inputH != 0)
+        {
+            anim.SetBool("corriendo", true);
+            // mirar a la derecha
+            if (inputH > 0) transform.eulerAngles = Vector3.zero;
+            // mirar a la izquierda
+            else transform.eulerAngles = new Vector3(0, 180, 0); 
+        }
+        else
+        {
+            anim.SetBool("corriendo", false);
+        }
 
-        // Jump
+    }
+
+    private void Saltar()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
         {
             rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+            anim.SetTrigger("saltar");
         }
-
-        // Flip the player based on direction
-        if (inputH > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (inputH < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        
     }
+    
+    private void Atacar()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            anim.SetTrigger("atacar");
+        }
+    }
+    
 }
