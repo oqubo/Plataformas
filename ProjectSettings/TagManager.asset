@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - PlayerDeteccion
+  - Moneda
   layers:
   - Default
   - TransparentFX

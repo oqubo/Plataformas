@@ -35,7 +35,6 @@ public class CanvasManager : MonoBehaviour
     {
         // mostrar menu de pausa
         popupMenu.SetActive(true);
-        Debug.Log("Juego pausado");
         GameManager.Instance.PausarJuegoOn();
     }
 
@@ -43,7 +42,6 @@ public class CanvasManager : MonoBehaviour
     {
         // quitar menu de pausa
         popupMenu.SetActive(false);
-        Debug.Log("Juego reanudado");
         GameManager.Instance.PausarJuegoOff();
     }
     public void BtnReiniciar()
@@ -59,12 +57,12 @@ public class CanvasManager : MonoBehaviour
 
     public void UIactualizarPuntos(int puntos)
     {
-        textoPuntos.text = puntos.ToString();
+        textoPuntos.text = "Puntos: "+puntos.ToString();
     }
 
     public void UIactualizarVida(float vida)
     {
-        barraVida.fillAmount = vida;
+        barraVida.fillAmount = vida / 100f; ;
     }
 
 }

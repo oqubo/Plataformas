@@ -191,15 +191,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 20
-  danoAtaque: 10
   nivel: 0
+  danoAtaque: 10
+  puntoAtaque: {fileID: 3074174942017302873}
+  radioAtaque: 1.4
+  queEsDanable:
+    serializedVersion: 2
+    m_Bits: 64
   puntosPatrulla:
   - {fileID: 3141732767502894492}
   - {fileID: 6273613963322310194}
   - {fileID: 3350378285700670623}
   - {fileID: 338669114019039190}
   - {fileID: 2292200789981975201}
-  velocidadMovimiento: 4
+  velocidadMovimiento: 3
+  jugador: {fileID: 0}
 --- !u!1 &3018923446231663401
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,5 +496,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 7
+  m_Offset: {x: -3, y: 0}
+  m_Radius: 4.5

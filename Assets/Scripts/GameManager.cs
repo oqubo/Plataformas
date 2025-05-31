@@ -83,9 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void FinalizarPartida()
     {
-        Debug.Log("Partida finalizada");
-
-        Invoke("ReiniciarEscena", 3f);
+        Invoke("ReiniciarEscena", 5f);
     }
 
 

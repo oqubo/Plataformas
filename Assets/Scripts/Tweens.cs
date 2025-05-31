@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Tweens : MonoBehaviour
 {
 
-    
+
     public void Parpadeo()
     {
         int parpadeos = 3;
@@ -30,7 +30,6 @@ public class Tweens : MonoBehaviour
     {
 
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
-        Destroy(gameObject, 0.3f);
     }
 
     public void MoverArribaAbajo()
@@ -40,7 +39,26 @@ public class Tweens : MonoBehaviour
             .SetEase(Ease.InOutSine);
     }
     
+    public void Giro2D()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOScaleX(0f, 0.5f).SetEase(Ease.InSine));
+        seq.AppendCallback(() => FlipSprite());
+        seq.Append(transform.DOScaleX(1f, 0.5f).SetEase(Ease.OutSine));
+        seq.SetLoops(-1);  
+    }
+    void FlipSprite()
+    {
+        var sr = GetComponent<SpriteRenderer>();
+        sr.flipX = !sr.flipX;
+    }
     
+    public void Giro3D()
+    {
+        transform.DORotate(new Vector3(0, 360, 0), 1f, RotateMode.FastBeyond360)
+                 .SetLoops(-1)
+                 .SetEase(Ease.Linear);
+    }
 
 
 

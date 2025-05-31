@@ -1,20 +1,28 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 
 public abstract class Enemigo : MonoBehaviour, IAtaque
 {
     [SerializeField] protected float vida;
-    [SerializeField] protected float danoAtaque;
+
     [SerializeField] protected float nivel;
 
+    [Header("Ataque")]
+    [SerializeField] protected float danoAtaque;
+    [SerializeField] protected Transform puntoAtaque;
+    [SerializeField] protected float radioAtaque;
+    [SerializeField] protected LayerMask queEsDanable;
 
 
+    [Header("Patrulla")]
     [SerializeField] protected Transform[] puntosPatrulla;
     [SerializeField] protected float velocidadMovimiento;
     protected Vector3 destinoActual;
     protected int indiceActual = 0;
 
+    [Header("Sonidos")]
+    [SerializeField] protected AudioClip sonidoAtaque;
+    [SerializeField] protected AudioClip sonidoMorir;
 
     protected Animator anim;
 
@@ -84,7 +92,7 @@ public abstract class Enemigo : MonoBehaviour, IAtaque
         // si lo detecta (colider de deteccion)
         if (other.CompareTag("PlayerDeteccion"))
         {
-            Atacar();
+            LanzarAtaque();
         }
 
         // si lo traspasa (colider interior)
@@ -97,18 +105,20 @@ public abstract class Enemigo : MonoBehaviour, IAtaque
     }
         
 
+    public abstract void LanzarAtaque();
     public abstract void Atacar();
-    public void RecibirDano(float danoRecibido)
-    { 
-            vida -= danoAtaque;
-            tweens.Parpadeo();
+    
 
-            if (vida <= 0)
-            {
-                anim.SetTrigger("morir");
-                //            tweens.Desaparecer();
-                //            Destroy(gameObject, 0.3f);
-            }
+    public void RecibirDano(float danoRecibido)
+    {
+        vida -= danoAtaque;
+        tweens.Parpadeo();
+
+        if (vida <= 0)
+        {
+            anim.SetTrigger("morir");
+            Destroy(gameObject, 2f);
+        }
     }
     
 }
