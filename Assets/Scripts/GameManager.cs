@@ -1,9 +1,14 @@
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
-    public GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
+
+//------------------------------
+// CREACION
+//------------------------------
     private void Awake()
     {
         if (Instance == null)
@@ -13,20 +18,30 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Elimina duplicados
+            // Elimina duplicados
+            Destroy(gameObject);
         }
 
-        // Configuracion de FPS
-#if UNITY_EDITOR // Limitar FPS en el editor
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 0;
-#else // Sin limite en compilado
-        Application.targetFrameRate = -1;
-#endif
-
+        ConfigurarFPS();
     }
 
 
+    private void ConfigurarFPS()
+    {
+        // Limitar FPS en el editor
+#if UNITY_EDITOR
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+        // Sin limite en compilado
+#else
+        Application.targetFrameRate = -1;
+#endif
+    }
+
+
+//------------------------------
+// ESCENAS
+//------------------------------
 
     public void CargarEscena(int sceneBuildIndex)
     {
@@ -37,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         CargarEscena(currentSceneIndex);
+        PausarJuegoOff();
     }
 
 
@@ -52,28 +68,49 @@ public class GameManager : MonoBehaviour
 
     public void SalirDeJuego()
     {
-#if UNITY_EDITOR // Detiene el juego en el editor
+        // Detiene el juego en el editor
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#else // Cierra la aplicacion en compilado
+        // Cierra la aplicacion en compilado
+#else
         Application.Quit(); 
 #endif
+
+        // guardar partida
+        GuardarPartida();
     }
 
 
-    /*
-        public void GuardarPartida()
-        {
-            if (PlayerPrefs.GetInt("nivelDesbloqueado") < nivel)
-                PlayerPrefs.SetInt("nivelDesbloqueado", nivel);
-            if (PlayerPrefs.GetInt("puntosMax") < puntos)
-                PlayerPrefs.SetInt("puntosMax", puntos);
-        }
+    public void FinalizarPartida()
+    {
+        Debug.Log("Partida finalizada");
 
-        public void cargarPartida(){
-            nivel = PlayerPrefs.GetInt("nivelDesbloqueado");
-            puntos = PlayerPrefs.GetInt("puntosMax");
-            }
-    */
+        Invoke("ReiniciarEscena", 3f);
+    }
+
+
+//------------------------------
+// GUARDADO
+//------------------------------
+
+    public void GuardarPartida()
+    {
+        /*
+        if (PlayerPrefs.GetInt("nivelDesbloqueado") < nivel)
+            PlayerPrefs.SetInt("nivelDesbloqueado", nivel);
+        if (PlayerPrefs.GetInt("puntosMax") < puntos)
+            PlayerPrefs.SetInt("puntosMax", puntos);
+        */
+    }
+
+    public void CargarPartida()
+    {
+        /*
+        nivel = PlayerPrefs.GetInt("nivelDesbloqueado");
+        puntos = PlayerPrefs.GetInt("puntosMax");
+        */
+    }
+
 
 
 }
