@@ -46,6 +46,8 @@ public class CanvasManager : MonoBehaviour
     }
     public void BtnReiniciar()
     {
+        // quitar menu de pausa
+        popupMenu.SetActive(false);        
         GameManager.Instance.ReiniciarEscena();
     }
     public void BtnSalir()

@@ -32,12 +32,20 @@ public class Tweens : MonoBehaviour
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
     }
 
-    public void MoverArribaAbajo()
+    public void MoverArribaAbajo(float distancia, float velocidad)
     {
-        transform.DOMoveY(transform.position.y + 0.5f, 0.5f)
+        transform.DOMoveY(transform.position.y + distancia, velocidad)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }
+    
+    public void MoverIzquierdaDerecha(float distancia, float velocidad)
+    {
+        transform.DOMoveX(transform.position.x + distancia, velocidad)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine);
+    }
+
     
     public void Giro2D()
     {
@@ -45,7 +53,7 @@ public class Tweens : MonoBehaviour
         seq.Append(transform.DOScaleX(0f, 0.5f).SetEase(Ease.InSine));
         seq.AppendCallback(() => FlipSprite());
         seq.Append(transform.DOScaleX(1f, 0.5f).SetEase(Ease.OutSine));
-        seq.SetLoops(-1);  
+        seq.SetLoops(-1);
     }
     void FlipSprite()
     {
