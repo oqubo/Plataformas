@@ -4,7 +4,6 @@ using UnityEngine;
 public abstract class Enemigo : MonoBehaviour, IAtaque
 {
     [SerializeField] protected float vida;
-
     [SerializeField] protected float nivel;
 
     [Header("Ataque")]

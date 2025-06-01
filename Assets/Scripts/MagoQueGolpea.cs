@@ -4,7 +4,6 @@ using UnityEngine;
 public class MagoQueGolpea : Enemigo
 {
 
-
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -17,9 +16,6 @@ public class MagoQueGolpea : Enemigo
 
 
     }
-
-
-
 
     public override void LanzarAtaque()
     {

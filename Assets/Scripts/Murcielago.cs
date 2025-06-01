@@ -75,7 +75,6 @@ public class Murcielago : Enemigo
                 break;
             }
         }
-
     }
     
     void OnDrawGizmos()
